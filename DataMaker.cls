@@ -72,11 +72,11 @@ private static void CreateConditions(){
 private static void CreateSymptoms(){
     List<Symptom__c> symptomInsert = new List<Symptom__c>();
 
-    symptomInsert.add(new Symptom__c(Name='Fever', External_Id__c='400'));
-    symptomInsert.add(new Symptom__c(Name='Chills', External_Id__c='401'));
-    symptomInsert.add(new Symptom__c(Name='Weight Loss', External_Id__c='402'));
-    symptomInsert.add(new Symptom__c(Name='Chest Pain', External_Id__c='403'));
-    symptomInsert.add(new Symptom__c(Name='Vomiting', External_Id__c='404'));
+    symptomInsert.add(new Symptom__c(Name='Fever', External_Id__c='s_98'));
+    symptomInsert.add(new Symptom__c(Name='Chills', External_Id__c='s_81'));
+    symptomInsert.add(new Symptom__c(Name='Weight Loss', External_Id__c='s_285'));
+    symptomInsert.add(new Symptom__c(Name='Chest Pain', External_Id__c='s_50'));
+    symptomInsert.add(new Symptom__c(Name='Vomiting', External_Id__c='s_305'));
     
     insert symptomInsert;
 }
