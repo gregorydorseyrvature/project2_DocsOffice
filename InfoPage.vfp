@@ -1,0 +1,42 @@
+<apex:page standardController="User" extensions="InfoPageExtension">
+ <apex:sectionHeader title="Cliniscope" subtitle="User Information" />
+    <apex:pageBlock > 
+    <apex:pageBlockSection columns="2" showHeader="true" title="Patient Information">
+        <apex:outputText value="{!User.FirstName}"/>
+        <apex:outputText value="{!User.Age__c}"/>
+        <apex:outputText value="{!User.Email}" />
+        <apex:outputText value="{!User.Phone}"/>
+    </apex:pageBlockSection>
+    <apex:pageBlockSection >
+          <table border = "1" cellpadding = "5" cellspacing = "5">
+        	<tr>
+        	<th>Doctor</th>
+        	<th>Time</th> 
+        	</tr>
+        <apex:repeat value="{!NewAppointments}" var="appt">
+            <tr>
+            <td>{! appt.Doctor__r.name }</td>
+            <td>{! appt.DateTime__c }</td> 
+            </tr>
+         </apex:repeat>
+            </table>
+         <br/>
+	</apex:pageBlockSection>
+    <apex:pageBlockSection >
+        <table border = "1" cellpadding = "5" cellspacing = "5">
+        <tr>
+        <th>Doctor</th>
+        <th>Time</th> 
+        </tr>
+        <apex:repeat value="{!OldAppointments}" var="appt">
+            <tr>
+            <td>{! appt.Doctor__r.name }</td>
+            <td>{! appt.DateTime__c }</td> 
+            </tr>
+         </apex:repeat>
+         </table>
+         <br/>
+	</apex:pageBlockSection>    
+    </apex:pageBLock>
+</apex:page>
+                       
