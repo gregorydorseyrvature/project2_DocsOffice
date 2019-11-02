@@ -1,0 +1,164 @@
+<apex:page  docType="html-5.0" controller="AppointmentBookingPageController"  standardStylesheets="false">
+
+<head>
+
+    <!-- BootStrap StyleSheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+
+
+
+
+
+
+
+</head>
+
+<apex:form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="container" id="content"/>
+
+    <apex:actionFunction action="{!bookAppointment2}" name="bookAppointment2" rerender="showstate" >
+                <apex:param name="dateParam" assignTo="{!appointmentDate}" value="" />
+                <apex:param name="docParam" assignTo="{!appointmentDoc}" value="" />
+    </apex:actionFunction> 
+
+</apex:form>
+
+
+
+    
+    
+<script>
+
+    DocId = '{!DocId}';
+    DocId = DocId.replace('[', "");
+    DocId = DocId.replace(']', "");
+    DocId = DocId.split(", ");
+    console.log('Doc Id: ' + DocId);
+
+
+
+
+    DocName = '{!DocName}';
+    DocName = DocName.replace('[', "");
+    DocName = DocName.replace(']', "");
+    DocName = DocName.split(", ");
+    console.log('Doc Name: ' + DocName);
+
+    DocEmail = '{!DocEmail}';
+    DocEmail = DocEmail.replace('[', "");
+    DocEmail = DocEmail.replace(']', "");
+    DocEmail = DocEmail.split(", ");
+    console.log('Doc Email: ' + DocEmail);
+
+    console.log('Index: ' + DocId[0]);
+
+    const content = document.getElementById("content");
+    console.log(content);
+
+    var html = "";
+    const header =`                
+                    <table class="table table-hover" >
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Appointment Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                    <tbody> 
+                `;
+    
+    const footer=`     </tbody>
+                    </table>
+                `;
+
+    html += header;
+    var i;
+    for (i = 0; i < DocId.length; i++) {
+
+        var ButtonId = "BookButton" + "-" + DocId[i];
+        var DatePickerId = "DatePicker" + "-" + DocId[i];
+        console.log('Date Picker IDs:'+DatePickerId);
+
+        // console.log("Button"+ i +": "+ButtonId);
+        // console.log("Date Picker" + i + ": " + DatePickerId )
+
+
+        const row = `
+       
+                        <tr>
+                            <th scope="row">${DocName[i]}</th>
+                            <td> <a href="mailto:${DocEmail[i]}">${DocEmail[i]}</a> </td>
+                
+                            <td><input type="datetime-local" id="${DatePickerId}"/ required="true"></td>
+                            <td><button type="button" class="btn btn-outline-primary" id="${ButtonId}" onclick ={bookAppointment("${ButtonId}")}>Book Appointment</button></td>
+                        </tr>
+
+            `;
+        html += row;
+    }
+
+    html += footer;
+
+
+
+
+    content.innerHTML  = html;
+
+    function bookAppointment(DocId){
+        DocId = DocId.replace('BookButton-', "");
+        console.log('Doc Id: ' + DocId);
+
+        var DateId = "DatePicker-"+DocId;
+        var Dates = document.getElementById(DateId);
+
+        if(Dates.value == ""){
+            alert("Please fill date field")
+        }
+
+        else{
+            console.log(Dates.value);
+            bookAppointment2(Dates.value,DocId); 
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // html =" ";
+
+    // var buttons = document.getElementsByClassName("custom");
+
+
+    // for ( i=0; i < doctors.length; i++){
+    //     // document.getElementsByClassName("bookButton")[i].setAttribute("id", "demooclass"); 
+    //     //  document.getElementsByClassName(".bookButton")[2].innerHTML("Josh"); 
+
+    // }
+</script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</apex:page>
