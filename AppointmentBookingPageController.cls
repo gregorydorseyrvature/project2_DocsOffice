@@ -56,9 +56,14 @@ public with sharing class AppointmentBookingPageController {
 
         Appointment__c newAppointment = new Appointment__c(
             DateTime__c = appointmentDate2,
-            Doctor__c = appointmentDoc
-    
+            Doctor__c = appointmentDoc,
+            User__c = user
             );
+
+        insert newAppointment;
+        
+
+
 
 
 

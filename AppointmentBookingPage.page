@@ -1,4 +1,4 @@
-<apex:page  docType="html-5.0" controller="AppointmentBookingPageController"  standardStylesheets="false">
+<apex:page  docType="html-5.0" controller="AppointmentBookingPageController"  standardStylesheets="false" sidebar="false" showHeader="false">
 
 <head>
 
