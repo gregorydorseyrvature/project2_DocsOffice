@@ -1,0 +1,68 @@
+<apex:page standardController="User" extensions="InfoPageExtension" sidebar="false" showHeader="false" tabStyle="User">
+    <head>
+    <!-- BootStrap StyleSheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+	</head>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">      
+    	<div class="container-fluid">
+        	<div class="navbar-header">
+            	<a class="navbar-brand" href="https://project-2-developer-edition.na114.force.com/community/apex/InfoPage">   
+                    <image src="{!$Resource.logolong}" height="70" /></a>
+            	</div>
+                <ul class="navbar navbar-nav">
+                     <li><a href="https://project-2-developer-edition.na114.force.com/community/apex/checkSymptomsPage?sfdc.tabName=01r3k000000nkW2">Check Symptoms</a></li>
+                </ul>     
+        	</div> 
+    </nav>
+
+    <div class="container">
+        
+   
+	<form>
+	<apex:pageBlock > 
+		<apex:pageBlockSection showHeader="true" title="{!$User.FirstName} {!$User.LastName}" collapsible="false">
+            Email: <apex:outputText value="{!$User.Email}"/><br/>
+        	Age: <apex:outputText value="{!$User.Age__c}"/><br/>
+        	Phone: <apex:outputText value="{!$User.Phone}"/><br/>
+        	Gender: <apex:outputLabel value="{!TEXT($User.Gender__c)}"/><br/>
+		</apex:pageBlockSection>
+        
+    	<apex:pageBlockSection title="Upcoming Appointments" collapsible="false" columns="2">
+			<apex:pageBlockTable value="{!NewAppointments}" var="appt">
+                <apex:column >
+                    <apex:facet name="header">Doctor</apex:facet>
+                    	{! appt.Doctor__r.name }
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Time</apex:facet>
+                    	{! appt.DateTime__c }
+                </apex:column>
+            </apex:pageBlockTable>       
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Past Appointments" collapsible="false" columns="2">
+			<apex:pageBlockTable value="{!OldAppointments}" var="appt">
+                <apex:column >
+                    <apex:facet name="header">Doctor</apex:facet>
+                    	{! appt.Doctor__r.name }
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Time</apex:facet>
+                    	{! appt.DateTime__c }
+                </apex:column>
+            </apex:pageBlockTable>       
+        </apex:pageBlockSection>     
+	</apex:pageBlock>
+    </form>
+        
+     </div>
+    <script>
+    username='{!username}';
+    console.log('name: '+username);
+    </script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</apex:page>
