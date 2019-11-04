@@ -12,6 +12,8 @@ public with sharing class infermedicaApiConsumerController {
     public List<User> use{get;set;}
     public Contact c { get; set; }
     public User tempUser {get;set;}
+    public String condId {get;set;}
+
 
     public infermedicaApiConsumerController() {
         tempUser = new User();
@@ -36,6 +38,7 @@ public with sharing class infermedicaApiConsumerController {
     public void selectSymptoms() {
         selectedSymptoms = new List<Symptom__c>();
         conditionList = new List<Conditions>();
+        cond = new Conditions();
         for (wrapSymptom wrapSymptomObj : wrapSymptomList) {
             if (wrapSymptomObj.selected == true) {
                 selectedSymptoms.add(wrapSymptomObj.symps);
@@ -46,6 +49,17 @@ public with sharing class infermedicaApiConsumerController {
         HttpResponse apiCall = Diagnose();
         results = (DiagnosisResponse) JSON.deserialize(apiCall.getBody(), DiagnosisResponse.class);
         value = results.conditions;
+        cond = value[0];
+        condId = cond.Id;
+    }
+
+    public PageReference bookAppointment(){
+        //condition id
+        String condName = ApexPages.currentPage().getParameters().get('conditionName');
+        String url = 'https://project-2-developer-edition.na114.force.com/community/apex/AppointmentBookingPage?Condition=' + cond.name;
+        PageReference pageRef = new PageReference(url);
+        pageRef.setRedirect(false);
+        return pageRef;
     }
 
     //This method is where I diagnose the patient
@@ -53,8 +67,7 @@ public with sharing class infermedicaApiConsumerController {
     //Make the API call
     public HttpResponse Diagnose() {
         Diagnosis diag = new Diagnosis();
-        //Grab Information form user object
-        //Previously I manually set them
+        //Grab Information from user object
         diag.sex = tempUser.Gender__c.toLowerCase();
         diag.age = (Integer)tempUser.Age__c;
         for (Symptom__c symp : selectedSymptoms) {
@@ -80,10 +93,12 @@ public with sharing class infermedicaApiConsumerController {
         HttpResponse response = http.send(request);
 
         if (response.getStatusCode() == 200) {
-           results = (DiagnosisResponse) JSON.deserialize(response.getBody(), DiagnosisResponse.class);
+            results = (DiagnosisResponse) JSON.deserialize(response.getBody(), DiagnosisResponse.class);
         }
         return response;
     }
+
+
 
     // This is our wrapper/container class. In this example a wrapper class contains
     // both the standard salesforce object Symptom and a Boolean value
