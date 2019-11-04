@@ -2,21 +2,44 @@
  - Created by gregd on 10/28/2019.
  -->
 
-<apex:page id="checkSymptomsPage" controller="infermedicaApiConsumerController" sideBar="false">
-    <apex:form>
-        <apex:pageBlock>
+<apex:page id="checkSymptomsPage" controller="infermedicaApiConsumerController" sideBar="false" showHeader="false">
+
+    <!-- BootStrap StyleSheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous" />
+
+
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    	<div class="container-fluid">
+        	<div class="navbar-header">
+            	<a class="navbar-brand" href="https://project-2-developer-edition.na114.force.com/community/apex/InfoPage">
+                    <image src="{!$Resource.logo}" height="50" /></a>
+            	</div>
+
+                <ul class="navbar navbar-nav">
+                        <li><a href="https://project-2-developer-edition.na114.force.com/community/apex/InfoPage">My Info</a>
+                    </li>
+                </ul>
+
+        	</div>
+    </nav>
+
+
+
+	<div class="container" >
+    <apex:form >
+        <apex:pageBlock >
             <apex:pageBlockSection title="User Information" collapsible="false" columns="2">
                 <apex:pageBlockTable value="{!use}" var="u">
-                    <apex:column>
+                    <apex:column >
                         <apex:facet name="header">Name</apex:facet>
-                        {!u.FirstName}
-                        {!u.LastName}
+                        {!u.FirstName} {!u.LastName}
                     </apex:column>
-                    <apex:column>
+                    <apex:column >
                         <apex:facet name="header">Gender</apex:facet>
                         {!u.Gender__c}
                     </apex:column>
-                    <apex:column>
+                    <apex:column >
                         <apex:facet name="header">Age</apex:facet>
                         {!u.Age__c}
                     </apex:column>
@@ -26,32 +49,47 @@
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton value="Diagnose Your Symptoms" action="{!selectSymptoms}" />
             </apex:pageBlockButtons>
+            <div style="overflow:scroll;width:1080px;height:600px;">
+
+
             <apex:pageBlockSection title="All Symptoms" collapsible="false" columns="2">
-                <apex:pageBlockTable value="{!wrapSymptomList}" var="sympWrap" id="table" title="All Symptoms">
-                    <apex:column>
-                        <apex:inputCheckbox value="{!sympWrap.selected}" id="inputId"/>
+                <apex:pageBlockTable value="{!wrapSymptomList}" var="sympWrap" id="table" title="All Symptoms" >
+                    <apex:column >
+                        <apex:inputCheckbox value="{!sympWrap.selected}" id="inputId" />
                     </apex:column>
-                    <apex:column value="{!sympWrap.symps.Name}"/>
-                    <apex:column value="{!sympWrap.symps.External_ID__c}"/>
+                    <apex:column value="{!sympWrap.symps.Name}" />
+                    <apex:column value="{!sympWrap.symps.External_ID__c}" />
                 </apex:pageBlockTable>
 
-                <apex:pageBlockTable value="{!value}" var="con" id="table2" title="Conditions">
-                    <apex:repeat var="cond" value="{!value}">
-                        <apex:column>
+
+                <apex:pageBlockTable value="{!value}" var="con2" id="table2" title="Conditions">
+                    <apex:repeat var="con" value="{!value}">
+                        <apex:column >
                             <apex:facet name="header">Id</apex:facet>
-                            {!cond.id}
+                            {!con.id}
                         </apex:column>
-                        <apex:column>
+                        <apex:column >
                             <apex:facet name="header">Name</apex:facet>
-                            {!cond.name}
+                            {!con.name}
                         </apex:column>
-                        <apex:column>
+                        <apex:column >
                             <apex:facet name="header">Probability</apex:facet>
-                            {!cond.probability}
+                            {!con.probability}
                         </apex:column>
                     </apex:repeat>
                 </apex:pageBlockTable>
             </apex:pageBlockSection>
+            </div>
         </apex:pageBlock>
+        <apex:commandLink value="Book An Appointment" action="{!bookAppointment}"></apex:commandLink>
     </apex:form>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </apex:page>
